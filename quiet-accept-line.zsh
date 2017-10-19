@@ -13,7 +13,7 @@ function quiet-accept-line () {
     fi
     # Backup and reset current buffer
     ZLE_LAST_QUIET_ACCEPT_LINE=$BUFFER
-    local _BUFFER=$BUFFER
+    local _BUFFER="$BUFFER"
     BUFFER=""
     # Erase current prompt
     zle reset-prompt
