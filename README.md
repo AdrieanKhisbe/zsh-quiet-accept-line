@@ -1,6 +1,8 @@
 Zsh Quiet-Accept-Line
 =====================
 
+[![Build Status](https://travis-ci.org/AdrieanKhisbe/zsh-quiet-accept-line.svg?branch=master)](https://travis-ci.org/AdrieanKhisbe/zsh-quiet-accept-line)
+
 ## About
 The goal of this zsh plugin is to enable to run typed zsh command without triggering a new prompt and saving the query to the history
 
