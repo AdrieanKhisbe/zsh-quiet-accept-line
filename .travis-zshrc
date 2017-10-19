@@ -1,0 +1,7 @@
+source "${ZULU_DIR:-"${ZDOTDIR:-$HOME}/.zulu"}/core/zulu"
+zulu init
+
+source ~/antigen.zsh
+
+antigen bundle rylnd/shpec
+antigen apply
