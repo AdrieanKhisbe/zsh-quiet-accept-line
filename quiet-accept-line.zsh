@@ -23,6 +23,12 @@ function quiet-accept-line () {
     PROMPT=$OLDPROMPT
     zle reset-prompt
 }
-
 zle -N quiet-accept-line
 bindkey '^X^M' quiet-accept-line
+
+function silent-accept-line () {
+    eval $BUFFER > /dev/null
+    BUFFER=""
+}
+zle -N silent-accept-line
+bindkey '^X^J' silent-accept-line
