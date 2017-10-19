@@ -5,7 +5,7 @@
 function quiet-accept-line () {
     # Backup prompt and build an invisible one with same
     # number of line
-    OLDPROMPT=$PROMPT
+    OLDPROMPT="$PROMPT"
     local nline=$(echo "$PROMPT" |wc -l)
     if [ $nline = 1 ]
     then PROMPT=""
@@ -21,7 +21,7 @@ function quiet-accept-line () {
     # run command
     eval $_BUFFER
     # reset original prompt
-    PROMPT=$OLDPROMPT
+    PROMPT="$OLDPROMPT"
     zle reset-prompt
 }
 zle -N quiet-accept-line
