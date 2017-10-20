@@ -14,6 +14,10 @@ This plugins define 3 `zle` widgets:
 - `silent-accept-line` bound to <kbd>C-x C-j</kbd>: run the current typed command, without output a new prompt. output wil be suppressed
 - `last-quiet-accept-line` bound to <kbd>C-x C-k</kbd>: restore to the prompt the last command that was run with `quiet/silent-accept-line``
 
+Optionaly status code of the quietly runned command can be display.
+To do so, set `ZLE_QAL_STATUS_DISPLAY` to `true`, `on` or `yes`.
+
+
 ## Installation
 
 Just source [quiet-accept-line](./quiet-accept-line.zsh) content, or if you use a plugin manager set `adrieankhisbe/zsh-quiet-accept-line` as plugin:
