@@ -30,7 +30,7 @@ function quiet-accept-line () {
     zle reset-prompt
 }
 zle -N quiet-accept-line
-bindkey '^X^M' quiet-accept-line
+bindkey "${ZLE_QAL_QUIET_KEY:-^X^M}" quiet-accept-line
 
 function silent-accept-line () {
     ZLE_LAST_QUIET_ACCEPT_LINE="$BUFFER"
@@ -39,11 +39,11 @@ function silent-accept-line () {
     BUFFER=""
 }
 zle -N silent-accept-line
-bindkey '^X^J' silent-accept-line
+bindkey "${ZLE_QAL_SILENT_KEY:-^X^J}" silent-accept-line
 
 function last-quiet-accept-line () {
     BUFFER="$ZLE_LAST_QUIET_ACCEPT_LINE"
     zle end-of-line
 }
 zle -N last-quiet-accept-line
-bindkey '^X^K' last-quiet-accept-line
+bindkey "${ZLE_QAL_SILENT_LAST:-^X^K}" last-quiet-accept-line
