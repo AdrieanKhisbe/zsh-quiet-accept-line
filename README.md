@@ -16,7 +16,7 @@ This plugins define 3 `zle` widgets:
 
 ## Installation
 
-Just source [diraction](./quiet-accept-line.zsh) content, or if you use a plugin manager add `adrieankhisbe/zsh-quiet-accept-line` as plugin:
+Just source [quiet-accept-line](./quiet-accept-line.zsh) content, or if you use a plugin manager set `adrieankhisbe/zsh-quiet-accept-line` as plugin:
 
 - for [antigen](https://github.com/zsh-users/antigen), just add **zsh-quiet-accept-line** to your bundles as `adrieankhisbe/zsh-quiet-accept-line`
    `antigen bundle adrieankhisbe/zsh-quiet-accept-line`
