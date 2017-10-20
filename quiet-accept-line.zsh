@@ -17,11 +17,12 @@ function quiet-accept-line () {
     echo -n $reset_color
     # run command
     eval $_BUFFER
-    local _status=$?
+    ZLE_QAL_STATUS=$?
 
-    if $ZLE_QAL_DISPLAY_STATUS; then
-        [ $_status -eq 0 ] && RPROMPT="$ZLE_QAL_STATUS_OK" zle reset-prompt \
-                           || RPROMPT="$ZLE_QAL_STATUS_KO" zle reset-prompt
+    if $ZLE_QAL_STATUS_DISPLAY; then
+        [ $ZLE_QAL_STATUS -eq 0 ] \
+            && RPROMPT="$ZLE_QAL_STATUS_OK" zle reset-prompt \
+            || RPROMPT="$ZLE_QAL_STATUS_KO" zle reset-prompt
         sleep $ZLE_QAL_STATUS_DURATION
     fi
 
@@ -34,6 +35,7 @@ bindkey '^X^M' quiet-accept-line
 function silent-accept-line () {
     ZLE_LAST_QUIET_ACCEPT_LINE="$BUFFER"
     eval $BUFFER > /dev/null
+    ZLE_QAL_STATUS=$?
     BUFFER=""
 }
 zle -N silent-accept-line
