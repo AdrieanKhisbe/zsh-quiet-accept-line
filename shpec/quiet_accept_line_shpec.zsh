@@ -81,7 +81,7 @@ describe "Last Quiet Accept line"
     it "restore last qal"
         ZLE_LAST_QUIET_ACCEPT_LINE="echo my secret command"
         last-quiet-accept-line
-        assert equal $BUFFER "echo my secret command"
+        assert equal "$BUFFER" "echo my secret command"
     end
 
     it "goes to the end of the last qal"
