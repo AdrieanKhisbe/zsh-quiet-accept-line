@@ -5,23 +5,21 @@
 function quiet-accept-line () {
     # Backup prompt and build an invisible one with same
     # number of line
-    OLDPROMPT="$PROMPT"
     local nline=$(echo "$PROMPT" |wc -l)
     if [ $nline = 1 ]
-    then PROMPT=""
-    else PROMPT="$(repeat $(($nline -1)) echo)"
+    then VOID_PROMPT=""
+    else VOID_PROMPT="$(repeat $(($nline -1)) echo)"
     fi
     # Backup and reset current buffer
     ZLE_LAST_QUIET_ACCEPT_LINE="$BUFFER"
     local _BUFFER="$BUFFER"
     BUFFER=""
     # Erase current prompt
-    zle reset-prompt
+    PROMPT="$VOID_PROMPT" zle reset-prompt
     echo -n $reset_color
     # run command
     eval $_BUFFER
     # reset original prompt
-    PROMPT="$OLDPROMPT"
     zle reset-prompt
 }
 zle -N quiet-accept-line
