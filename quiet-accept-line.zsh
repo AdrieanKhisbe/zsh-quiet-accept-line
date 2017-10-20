@@ -3,19 +3,14 @@
 # Zle Widget to execute command without adding it to history
 # and triggering a new prompt
 function quiet-accept-line () {
-    # Backup prompt and build an invisible one with same
-    # number of line
-    local nline=$(echo "$PROMPT" |wc -l)
-    if [ $nline = 1 ]
-    then VOID_PROMPT=""
-    else VOID_PROMPT="$(repeat $(($nline -1)) echo)"
-    fi
     # Backup and reset current buffer
     ZLE_LAST_QUIET_ACCEPT_LINE="$BUFFER"
     local _BUFFER="$BUFFER"
     BUFFER=""
-    # Erase current prompt
-    PROMPT="$VOID_PROMPT" zle reset-prompt
+    # Erase current prompt, replace by an invisible one
+    # with same number of line
+    PROMPT="$(repeat $(($(echo \"$PROMPT\"|wc -l) -1)) echo)" \
+          zle reset-prompt
     echo -n $reset_color
     # run command
     eval $_BUFFER
