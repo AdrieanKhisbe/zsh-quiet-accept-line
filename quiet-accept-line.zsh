@@ -1,5 +1,8 @@
 # quiet-accept-line
 
+ZLE_QAL_STATUS_OK="%{$fg_bold[green]%}✔"
+ZLE_QAL_STATUS_KO="%{$fg_bold[red]%}✖"
+
 # Zle Widget to execute command without adding it to history
 # and triggering a new prompt
 function quiet-accept-line () {
@@ -13,6 +16,14 @@ function quiet-accept-line () {
     echo -n $reset_color
     # run command
     eval $_BUFFER
+    local _status=$?
+
+    if $ZLE_QAL_DISPLAY_STATUS; then
+        [ $_status -eq 0 ] && RPROMPT="$ZLE_QAL_STATUS_OK" zle reset-prompt \
+                           || RPROMPT="$ZLE_QAL_STATUS_KO" zle reset-prompt
+        sleep 0.5
+    fi
+
     # reset original prompt
     zle reset-prompt
 }
