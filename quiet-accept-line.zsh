@@ -37,6 +37,7 @@ bindkey '^X^J' silent-accept-line
 
 function last-quiet-accept-line () {
     BUFFER="$ZLE_LAST_QUIET_ACCEPT_LINE"
+    zle end-of-line
 }
 zle -N last-quiet-accept-line
 bindkey '^X^K' last-quiet-accept-line

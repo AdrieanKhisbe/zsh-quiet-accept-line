@@ -84,4 +84,10 @@ describe "Last Quiet Accept line"
         assert equal $BUFFER "echo my secret command"
     end
 
+    it "goes to the end of the last qal"
+        reset_stub_zle
+        last-quiet-accept-line
+        assert equal "${ZLE_CALL[1]}" "end-of-line \"$PROMPT"\"
+        reset_stub_zle
+    end
 end
