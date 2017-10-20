@@ -19,7 +19,7 @@ function quiet-accept-line () {
     eval $_BUFFER
     ZLE_QAL_STATUS=$?
 
-    if $ZLE_QAL_STATUS_DISPLAY; then
+    if [[ $ZLE_QAL_STATUS_DISPLAY =~ ^(true|on|yes)$ ]]; then
         [ $ZLE_QAL_STATUS -eq 0 ] \
             && RPROMPT="$ZLE_QAL_STATUS_OK" zle reset-prompt \
             || RPROMPT="$ZLE_QAL_STATUS_KO" zle reset-prompt
