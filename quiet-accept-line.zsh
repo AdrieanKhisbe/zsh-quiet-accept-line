@@ -1,5 +1,6 @@
 # quiet-accept-line
 
+ZLE_QAL_STATUS_DURATION=0.5
 ZLE_QAL_STATUS_OK="%{$fg_bold[green]%}✔"
 ZLE_QAL_STATUS_KO="%{$fg_bold[red]%}✖"
 
@@ -21,7 +22,7 @@ function quiet-accept-line () {
     if $ZLE_QAL_DISPLAY_STATUS; then
         [ $_status -eq 0 ] && RPROMPT="$ZLE_QAL_STATUS_OK" zle reset-prompt \
                            || RPROMPT="$ZLE_QAL_STATUS_KO" zle reset-prompt
-        sleep 0.5
+        sleep $ZLE_QAL_STATUS_DURATION
     fi
 
     # reset original prompt
