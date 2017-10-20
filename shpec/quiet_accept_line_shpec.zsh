@@ -10,7 +10,7 @@ stub_command zle 'ZLE_CALL+=( "$1 \"$PROMPT\"" )'
 reset_stub_zle() { ZLE_CALL=(); }
 
 with_stub_eval() {
-    stub_command eval 'EVAL="$@"; $@'
+    stub_command eval 'EVAL="$@"; builtin eval ${@}'
     $1
     unstub_command eval
 }
