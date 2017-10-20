@@ -16,7 +16,7 @@ This plugins define 3 `zle` widgets:
 
 Optionaly status code of the quietly runned command can be display.
 To do so, set `ZLE_QAL_STATUS_DISPLAY` to `true`, `on` or `yes`.
-
+(`QAL` stands for *Quiet Accept Line*)
 
 ## Installation
 
@@ -25,3 +25,12 @@ Just source [quiet-accept-line](./quiet-accept-line.zsh) content, or if you use 
 - for [antigen](https://github.com/zsh-users/antigen), just add **zsh-quiet-accept-line** to your bundles as `adrieankhisbe/zsh-quiet-accept-line`
    `antigen bundle adrieankhisbe/zsh-quiet-accept-line`
 - for [zplug](https://github.com/zplug/zplug), add `zplug "adrieankhisbe/zsh-quiet-accept-line"`
+
+## Configuration
+
+Output of the status code can be customized with the following variable:
+
+- `ZLE_QAL_STATUS_DURATION`: how long status is displayed, blocking the prompt (default 0.5s)
+- `ZLE_QAL_STATUS_OK`: what is output for successful command (default green `✔` with prompt color escape `%{%}`)
+- `ZLE_QAL_STATUS_KO`: what is output for failing command (default red `✖` with prompt color escape `%{%}`)
+  note that status is saved to `ZLE_QAL_STATUS` variable
