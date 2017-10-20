@@ -4,9 +4,8 @@
 # and triggering a new prompt
 function quiet-accept-line () {
     # Backup and reset current buffer
-    ZLE_LAST_QUIET_ACCEPT_LINE="$BUFFER"
-    local _BUFFER="$BUFFER"
-    BUFFER=""
+    local _BUFFER="$BUFFER"; BUFFER=""
+    ZLE_LAST_QUIET_ACCEPT_LINE="$_BUFFER"
     # Erase current prompt, replace by an invisible one
     # with same number of line
     PROMPT="$(repeat $(($(echo \"$PROMPT\"|wc -l) -1)) echo)" \
