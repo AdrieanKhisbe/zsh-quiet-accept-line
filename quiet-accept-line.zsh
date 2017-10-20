@@ -1,8 +1,8 @@
 # quiet-accept-line
 
-ZLE_QAL_STATUS_DURATION=0.5
-ZLE_QAL_STATUS_OK="%{$fg_bold[green]%}✔"
-ZLE_QAL_STATUS_KO="%{$fg_bold[red]%}✖"
+ZLE_QAL_STATUS_DURATION=${ZLE_QAL_STATUS_DURATION:-0.5}
+ZLE_QAL_STATUS_OK=${ZLE_QAL_STATUS_OK:-"%{$fg_bold[green]%}✔"}
+ZLE_QAL_STATUS_KO=${ZLE_QAL_STATUS_KO:-"%{$fg_bold[red]%}✖"}
 
 # Zle Widget to execute command without adding it to history
 # and triggering a new prompt
