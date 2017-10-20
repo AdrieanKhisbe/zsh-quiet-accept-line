@@ -9,7 +9,7 @@ ZLE_QAL_STATUS_KO=${ZLE_QAL_STATUS_KO:-"%{$fg_bold[red]%}✖"}
 function quiet-accept-line () {
     # Backup and reset current buffer
     local _BUFFER="$BUFFER"; BUFFER=""
-    ZLE_LAST_QUIET_ACCEPT_LINE="$_BUFFER"
+    ZLE_QAL_LAST="$_BUFFER"
     # Erase current prompt, replace by an invisible one
     # with same number of line
     PROMPT="$(repeat $(($(echo \"$PROMPT\"|wc -l) -1)) echo)" \
@@ -33,7 +33,7 @@ zle -N quiet-accept-line
 bindkey "${ZLE_QAL_QUIET_KEY:-^X^M}" quiet-accept-line
 
 function silent-accept-line () {
-    ZLE_LAST_QUIET_ACCEPT_LINE="$BUFFER"
+    ZLE_QAL_LAST="$BUFFER"
     eval $BUFFER > /dev/null
     ZLE_QAL_STATUS=$?
     BUFFER=""
@@ -42,7 +42,7 @@ zle -N silent-accept-line
 bindkey "${ZLE_QAL_SILENT_KEY:-^X^J}" silent-accept-line
 
 function last-quiet-accept-line () {
-    BUFFER="$ZLE_LAST_QUIET_ACCEPT_LINE"
+    BUFFER="$ZLE_QAL_LAST"
     zle end-of-line
 }
 zle -N last-quiet-accept-line

@@ -46,7 +46,7 @@ describe "Quiet Accept line"
         BUFFER="echo save me"
         with_stub_eval quiet-accept-line > $OUTPUT
         assert equal "$BUFFER" ""
-        assert equal "$ZLE_LAST_QUIET_ACCEPT_LINE" "echo save me"
+        assert equal "$ZLE_QAL_LAST" "echo save me"
     end
 end
 
@@ -72,14 +72,14 @@ describe "Silent Accept line"
         BUFFER="echo save me"
         with_stub_eval silent-accept-line
         assert equal "$BUFFER" ""
-        assert equal "$ZLE_LAST_QUIET_ACCEPT_LINE" "echo save me"
+        assert equal "$ZLE_QAL_LAST" "echo save me"
     end
 end
 
 describe "Last Quiet Accept line"
 
     it "restore last qal"
-        ZLE_LAST_QUIET_ACCEPT_LINE="echo my secret command"
+        ZLE_QAL_LAST="echo my secret command"
         last-quiet-accept-line
         assert equal "$BUFFER" "echo my secret command"
     end
