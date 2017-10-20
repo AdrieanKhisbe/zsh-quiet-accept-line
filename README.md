@@ -10,9 +10,9 @@ The goal of this zsh plugin is to enable to run typed zsh command without trigge
 ## Usage
 This plugins define 3 `zle` widgets:
 
-- `quiet-accept-line` bound to <kbd>C-x RET<kbd>/<kbd>C-x C-m<kbd>: run the current typed command, without output a new prompt
-- `silent-accept-line` bound to <kbd>C-x C-j<kbd>: run the current typed command, without output a new prompt. output wil be suppressed
-- `last-quiet-accept-line` bound to <kbd>C-x C-k<kbd>: restore to the prompt the last command that was run with `quiet/silent-accept-line``
+- `quiet-accept-line` bound to <kbd>C-x RET</kbd>/<kbd>C-x C-m</kbd>: run the current typed command, without output a new prompt
+- `silent-accept-line` bound to <kbd>C-x C-j</kbd>: run the current typed command, without output a new prompt. output wil be suppressed
+- `last-quiet-accept-line` bound to <kbd>C-x C-k</kbd>: restore to the prompt the last command that was run with `quiet/silent-accept-line``
 
 ## Installation
 
