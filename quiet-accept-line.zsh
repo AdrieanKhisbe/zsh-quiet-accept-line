@@ -46,4 +46,4 @@ function last-quiet-accept-line () {
     zle end-of-line
 }
 zle -N last-quiet-accept-line
-bindkey "${ZLE_QAL_SILENT_LAST:-^X^K}" last-quiet-accept-line
+bindkey "${ZLE_QAL_LAST_KEY:-^X^K}" last-quiet-accept-line

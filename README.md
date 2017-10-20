@@ -28,6 +28,8 @@ Just source [quiet-accept-line](./quiet-accept-line.zsh) content, or if you use 
 
 ## Configuration
 
+Keys can be configured based on the following variables: `ZLE_QAL_QUIET_KEY`, `ZLE_QAL_SILENT_KEY`, and `ZLE_QAL_LAST_KEY`. (default being `^X^M`, `^X^J` and `^X^K`)
+
 Output of the status code can be customized with the following variable:
 
 - `ZLE_QAL_STATUS_DURATION`: how long status is displayed, blocking the prompt (default 0.5s)
