@@ -12,8 +12,8 @@ function quiet-accept-line () {
     ZLE_QAL_LAST="$_BUFFER"
     # Erase current prompt, replace by an invisible one
     # with same number of line
-    PROMPT="$(repeat $(($(echo \"$PROMPT\"|wc -l) -1)) echo)" \
-          zle reset-prompt
+    PROMPT="$(repeat $(($(echo \"$PROMPT\"|wc -l) -1)) echo)"\
+          zle reset-prompt; zle -R
     echo -n $reset_color
     # run command
     eval $_BUFFER
