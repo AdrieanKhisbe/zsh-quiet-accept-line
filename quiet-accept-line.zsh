@@ -11,7 +11,9 @@ DELAY=1
 # and triggering a new prompt
 function quiet-accept-line () {
 
-    RPROMPT="${STYLE} C-x RET " zle reset-prompt
+    RPROMPT="${STYLE} C-x RET "
+    zle reset-prompt; zle -R
+    RPROMPT=""
     sleep $DELAY
 
     # Backup and reset current buffer
@@ -36,13 +38,15 @@ function quiet-accept-line () {
     fi
 
     # reset original prompt
-    zle reset-prompt
+    zle reset-prompt;
 }
 zle -N quiet-accept-line
 bindkey "${ZLE_QAL_QUIET_KEY:-^X^M}" quiet-accept-line
 
 function silent-accept-line () {
-    RPROMPT="${STYLE} C-x C-j " zle reset-prompt
+    RPROMPT="${STYLE} C-x C-j "
+    zle reset-prompt; zle -R
+    RPROMPT=""
     sleep $DELAY;zle reset-prompt
 
     ZLE_QAL_LAST="$BUFFER"
@@ -54,7 +58,9 @@ zle -N silent-accept-line
 bindkey "${ZLE_QAL_SILENT_KEY:-^X^J}" silent-accept-line
 
 function last-quiet-accept-line () {
-    RPROMPT="${STYLE} C-x C-k " zle reset-prompt
+    RPROMPT="${STYLE} C-x C-k "
+    zle reset-prompt; zle -R
+    RPROMPT=""
     sleep $DELAY; zle reset-prompt
 
     BUFFER="$ZLE_QAL_LAST"
