@@ -36,3 +36,8 @@ Output of the status code can be customized with the following variable:
 - `ZLE_QAL_STATUS_OK`: what is output for successful command (default green `✔` with prompt color escape `%{%}`)
 - `ZLE_QAL_STATUS_KO`: what is output for failing command (default red `✖` with prompt color escape `%{%}`)
   note that status is saved to `ZLE_QAL_STATUS` variable
+
+## About
+
+This plugin was driven by the need to improve [tmux-resurrect](https://github.com/tmux-plugins/tmux-resurrect/blob/master/CHANGELOG.md) zsh history saving that was poluting terminal with `fc` commands.
+After some research I end up on the following [stack overflow question](https://unix.stackexchange.com/questions/336680/how-to-execute-command-without-storing-it-in-history-even-for-up-key-in-zsh), that inspired the initial implementation.
