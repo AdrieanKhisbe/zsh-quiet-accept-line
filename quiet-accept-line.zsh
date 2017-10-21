@@ -21,8 +21,10 @@ function quiet-accept-line () {
 
     if [[ $ZLE_QAL_STATUS_DISPLAY =~ ^(true|on|yes)$ ]]; then
         [ $ZLE_QAL_STATUS -eq 0 ] \
-            && RPROMPT="$ZLE_QAL_STATUS_OK" zle reset-prompt \
-            || RPROMPT="$ZLE_QAL_STATUS_KO" zle reset-prompt
+            && RPROMPT="$ZLE_QAL_STATUS_OK" \
+            || RPROMPT="$ZLE_QAL_STATUS_KO"
+        zle reset-prompt; zle -R
+        RPROMPT=""
         sleep $ZLE_QAL_STATUS_DURATION
     fi
 
