@@ -5,13 +5,14 @@ ZLE_QAL_STATUS_OK=${ZLE_QAL_STATUS_OK:-"%{$fg_bold[green]%}✔"}
 ZLE_QAL_STATUS_KO=${ZLE_QAL_STATUS_KO:-"%{$fg_bold[red]%}✖"}
 
 STYLE=%{$fg_bold[blue]$bg[yellow]%}
+DELAY=1
 
 # Zle Widget to execute command without adding it to history
 # and triggering a new prompt
 function quiet-accept-line () {
 
     RPROMPT="${STYLE} C-x RET " zle reset-prompt
-    sleep 2
+    sleep $DELAY
 
     # Backup and reset current buffer
     local _BUFFER="$BUFFER"; BUFFER=""
@@ -42,7 +43,7 @@ bindkey "${ZLE_QAL_QUIET_KEY:-^X^M}" quiet-accept-line
 
 function silent-accept-line () {
     RPROMPT="${STYLE} C-x C-j " zle reset-prompt
-    sleep 2;zle reset-prompt
+    sleep $DELAY;zle reset-prompt
 
     ZLE_QAL_LAST="$BUFFER"
     eval $BUFFER > /dev/null
@@ -54,7 +55,7 @@ bindkey "${ZLE_QAL_SILENT_KEY:-^X^J}" silent-accept-line
 
 function last-quiet-accept-line () {
     RPROMPT="${STYLE} C-x C-k " zle reset-prompt
-    sleep 2; zle reset-prompt
+    sleep $DELAY; zle reset-prompt
 
     BUFFER="$ZLE_QAL_LAST"
     zle end-of-line
