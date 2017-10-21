@@ -16,11 +16,12 @@ with_stub_eval() {
 }
 
 describe "Quiet Accept line"
-    it "reset prompy correctly"
+    it "reset prompt correctly"
         PROMPT=">"
         with_stub_eval quiet-accept-line
         assert equal "${ZLE_CALL[1]}" 'reset-prompt ""'
-        assert equal "${ZLE_CALL[2]}" 'reset-prompt ">"'
+        assert equal "${ZLE_CALL[2]}" '-R ">"'
+        assert equal "${ZLE_CALL[3]}" 'reset-prompt ">"'
         reset_stub_zle
     end
 
