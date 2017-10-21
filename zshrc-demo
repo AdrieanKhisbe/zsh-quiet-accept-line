@@ -1,0 +1,26 @@
+
+ZSH=$HOME/.adriean-zsh # Path to oh-my-zsh configuration.
+
+## Load antigen
+source $ZSH/antigen/antigen.zsh
+
+antigen use oh-my-zsh
+antigen bundles << BUNDLES
+zsh-users/zsh-syntax-highlighting
+BUNDLES
+antigen theme muse 
+source $ZSH/shconfig/highlight_config.zsh
+
+alias q=exit
+
+{echo;figlet -w 100 -f slant " Quiet Accept Line";echo}|lolcat -a -S 38 #12
+
+unsetopt nomatch
+setopt nobanghist
+
+What() { echo $fg_bold[blue]Quiet Accept Line$reset_color is a ZLE widget to make you run commands without triggering a new prompt ; }
+How() { echo It works by hitting $fg_bold[blue]$bg[yellow]C-x RET$reset_color after typing the command. ; }
+Show() { echo Watch this Quick preview ; ZLE_QAL_STATUS_DISPLAY=true; }
+
+source quiet-accept-line.zsh
+
