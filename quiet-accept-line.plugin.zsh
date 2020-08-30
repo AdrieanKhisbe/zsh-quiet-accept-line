@@ -1,4 +1,18 @@
+#       ___        _      _          _                      _        _     _
+#      / _ \ _   _(_) ___| |_       / \   ___ ___ ___ _ __ | |_     | |   (_)_ __   ___
+#     | | | | | | | |/ _ \ __|____ / _ \ / __/ __/ _ \ '_ \| __|____| |   | | '_ \ / _ \
+#     | |_| | |_| | |  __/ ||_____/ ___ \ (_| (_|  __/ |_) | ||_____| |___| | | | |  __/
+#      \__\_\\__,_|_|\___|\__|   /_/   \_\___\___\___| .__/ \__|    |_____|_|_| |_|\___|
+#                                                    |_|
+#                                                                                           Ξ
+
 # quiet-accept-line
+# Author: Adrien Becchis (@AdrieanKhisbe on github&twitter)
+# Homepage: http://github.com/AdrieanKhisbe/zsh-quiet-accept-line
+# License: MIT License<adriean.khisbe@live.fr>
+# Version: v0.1.0
+# Released on: 2017-10-2#
+
 
 ZLE_QAL_STATUS_DURATION=${ZLE_QAL_STATUS_DURATION:-0.5}
 ZLE_QAL_STATUS_OK=${ZLE_QAL_STATUS_OK:-"%{$fg_bold[green]%}✔"}
