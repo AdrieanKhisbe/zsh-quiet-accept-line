@@ -2,7 +2,7 @@
 # Spec for the zle widgets
 
 setopt aliases
-source $(dirname $0:A)/../quiet-accept-line.zsh
+source $(dirname $0:A)/../quiet-accept-line.plugin.zsh
 
 OUTPUT=$(mktemp)
 ZLE_CALL=()

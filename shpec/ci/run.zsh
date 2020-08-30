@@ -1,6 +1,11 @@
-echo "Sourcing ZshRc"
-source ~/.zshrc
+set -e
 
-echo "Launching Test"
-alias shpec="${ZSH:-zsh} -c 'disable -r end; . $HOME/.antigen/bundles/rylnd/shpec/bin/shpec'" # §hack §unstable
+export PATH="$(dirname $0:A):$PATH"
+
+echo "Launching Tests"
+zsh << "SCRIPT"
+disable -r end
+source <(antibody init)
+antibody bundle rylnd/shpec
 shpec
+SCRIPT
