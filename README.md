@@ -8,18 +8,31 @@ Zsh Quiet-Accept-Line
 
 > **Zsh plugin** is to enable to run typed zsh command without triggering a new prompt and saving the query to the history
 
-[![asciicast](https://asciinema.org/a/143440.png)](https://asciinema.org/a/143440)
+[![asciicast](https://asciinema.org/a/143440.png)](https://asciinema.org/a/143440) _(outputed now :scroll:)_
 
 ## Usage
-This plugins define 3 `zle` widgets:
+This plugins define several `zle` widgets:
 
-- `quiet-accept-line` bound to <kbd>C-x RET</kbd>/<kbd>C-x C-m</kbd>: run the current typed command, without output a new prompt
-- `silent-accept-line` bound to <kbd>C-x C-j</kbd>: run the current typed command, without output a new prompt. output wil be suppressed
+- `quiet-accept-line`: run the current typed command, without output a new prompt (it removes and rewrite command)
+  - bound to <kbd>C-x RET</kbd>/<kbd>C-x C-m</kbd>, **<kbd>ESC ENTER</kbd>**, (this is <kbd>Alt enter</kbd> on macos). Configurable with `ZLE_QAL_QUIET_KEY`
+- `pager-accept-line`: run the current typed command outputing output in pager, preserve(restore) existing prompt
+  - bound to both <kbd>C-x C-RET</kbd>/<kbd>C-x C-m</kbd>, <kbd>ESC CTRL-ENTER</kbd> **AND** <kbd>A-C-m</kbd>, <kbd> CTRL-ALT-ENTER</kbd> (overridable with `ZLE_QAL_PAGER_KEY` and `ZLE_QAL_PAGER_KEY2`)
+  - pager configurable with `ZLE_QAL_PAGER`, default to less
+
+- `compact-accept-line`: run the current typed command persisting a more compact prompt
+  - bound to <kbd>\C-N</kbd>/<kbd>C-n</kbd>,(overridable with `ZLE_QAL_COMPACT_KEY`)
+  - compact prompt default to `$` bold, configurable with `ZLE_QAL_COMPACT_PROMPT`
+
+- `silent-accept-line`: run the current typed command, without output a new prompt. output wil be suppressed
+  -  bound to <kbd>^X^\C-N</kbd> aka <kbd>ESC C-N</kbd>  (overridable with `ZLE_QAL_SILENT_KEY`)
+  - content is dump in a temporary file (`/tmp/zsh-quiet-accept-line-silent-$$.log` pattern). It can be configured with `ZLE_QAL_SILENT_DUMP_FILE` or disabled setting this env var to `/dev/null`
 - `last-quiet-accept-line` bound to <kbd>C-x C-k</kbd>: restore to the prompt the last command that was run with `quiet/silent-accept-line``
 
 Optionaly status code of the quietly runned command can be display.
 To do so, set `ZLE_QAL_STATUS_DISPLAY` to `true`, `on` or `yes`.
 (`QAL` stands for *Quiet Accept Line*)
+
+Also note, after running a command, the eventual commands that where pushed with an `ESC-Q` are restored.
 
 ## Installation
 
@@ -27,9 +40,10 @@ Just source [quiet-accept-line](./quiet-accept-line.zsh) content, or if you use 
 
 - for [antigen](https://github.com/zsh-users/antigen), just add **zsh-quiet-accept-line** to your bundles as `adrieankhisbe/zsh-quiet-accept-line`
    `antigen bundle adrieankhisbe/zsh-quiet-accept-line`
+- same for [antidote](https://github.com/mattmc3/antidote) and [antibody](https://github.com/getantibody/antibody)
 - for [zplug](https://github.com/zplug/zplug), add `zplug "adrieankhisbe/zsh-quiet-accept-line"`
 
-## Configuration
+## Configuration [TO BE UPDATED]
 
 Keys can be configured based on the following variables: `ZLE_QAL_QUIET_KEY`, `ZLE_QAL_SILENT_KEY`, and `ZLE_QAL_LAST_KEY`. (default being `^X^M`, `^X^J` and `^X^K`)
 
