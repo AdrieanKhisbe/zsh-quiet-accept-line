@@ -81,16 +81,17 @@ function pager-accept-line () {
     ZLE_QAL_LAST="$_BUFFER"
     eval $_BUFFER \
       2> >(sed "s:^\(.*\)\$:$(tput setaf 1)\1$(tput setaf 0):") \
-      | $ZLE_QAL_PAGER
+      | ${ZLE_QAL_PAGER:-less}
     ZLE_QAL_STATUS=$?
 
     # remove prompt and reset original prompt
     PROMPT="" zle reset-prompt; zle -R
     zle reset-prompt; zle -R
-    zle get-line # can pop up ESC-Q command if any  # ❓ see if optional behavior
+    zle get-line # can pop up ESC-Q command if any # ❓ see if make this optional behavior
 }
 zle -N pager-accept-line
 bindkey "${ZLE_QAL_PAGER_KEY:-^X^\C-M}" pager-accept-line
+bindkey "${ZLE_QAL_PAGER_KEY2:-\e^\C-M}" pager-accept-line
 
 function compact-accept-line () {
     if [ -z "$BUFFER" ]; then return; fi
@@ -98,18 +99,24 @@ function compact-accept-line () {
     zle accept-line;
 }
 zle -N compact-accept-line
-bindkey "${ZLE_QAL_PAGER_KEY:-\C-N}" compact-accept-line
+bindkey "${ZLE_QAL_COMPACT_KEY:-\C-N}" compact-accept-line
 
 function silent-accept-line () {
     if [ -z "$BUFFER" ]; then return; fi
-    ZLE_QAL_LAST="$BUFFER"
-    eval $BUFFER 2> >(sed "s:^:__ERR__>>:") >> $ZLE_QAL_SILENT_DUMP_FILE
+    # Backup and reset current buffer
+    local _BUFFER="$BUFFER"; BUFFER=""
+
+    ZLE_QAL_LAST="$_BUFFER"
+    eval $_BUFFER > $ZLE_QAL_SILENT_DUMP_FILE
     ZLE_QAL_STATUS=$?
-    BUFFER=""
-    # ❓ see if pop up there too
+
+    # remove prompt and reset original prompt
+    PROMPT="" zle reset-prompt; zle -R
+    zle reset-prompt; zle -R
+    zle get-line # can pop up ESC-Q command if any  # ❓ see if optional behavior
 }
 zle -N silent-accept-line
-bindkey "${ZLE_QAL_SILENT_KEY:-^X^J}" silent-accept-line
+bindkey "${ZLE_QAL_SILENT_KEY:-^X^\C-N}" silent-accept-line
 
 # 💭 Next ideas 💡
 # +❗ add variants

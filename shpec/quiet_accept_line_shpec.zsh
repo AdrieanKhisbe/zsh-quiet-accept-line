@@ -65,6 +65,7 @@ describe "Quiet Accept line"
         with_stub_eval quiet-accept-line > $OUTPUT
         assert equal "$BUFFER" ""
         assert equal "$ZLE_QAL_LAST" "echo save me"
+        reset_stub_zle
     end
 end
 
@@ -91,11 +92,23 @@ describe "Silent Accept line"
         with_stub_eval silent-accept-line
         assert equal "$BUFFER" ""
         assert equal "$ZLE_QAL_LAST" "echo save me"
+        reset_stub_zle
+    end
+    it "does handles prompt correctly"
+        PROMPT=">" BUFFER="echo yo"
+        with_stub_eval silent-accept-line
+        assert equal "${ZLE_CALL[1]}" 'reset-prompt ""'
+        assert equal "${ZLE_CALL[2]}" '-R ">"'
+        assert equal "${ZLE_CALL[3]}" 'reset-prompt ">"'
+        assert equal "${ZLE_CALL[4]}" '-R ">"'
+        assert equal "${ZLE_CALL[5]}" 'get-line ">"'
+        reset_stub_zle
     end
 end
 
 describe "Pager Accept line"
     it "does nothing with no buffer prompt correctly"
+       export BUFFER=""
         PROMPT=">"
         with_stub_eval pager-accept-line
         assert equal "${ZLE_CALL[1]}" ''
@@ -107,15 +120,22 @@ describe "Pager Accept line"
         file_tmp=$(mktemp)
         function save-it() { cat > $file_tmp; }
         export ZLE_QAL_PAGER=save-it
-#
         with_stub_eval pager-accept-line > $OUTPUT
         assert equal "$EVAL" "echo yo"
         assert equal "$(cat $OUTPUT)" "" # no output
         assert equal "$(cat $file_tmp)" "yo"
         reset_stub_zle
-
     end
-
+    it "does handles prompt correctly"
+        PROMPT=">" BUFFER="echo yo"
+        with_stub_eval pager-accept-line
+        assert equal "${ZLE_CALL[1]}" 'reset-prompt ""'
+        assert equal "${ZLE_CALL[2]}" '-R ">"'
+        assert equal "${ZLE_CALL[3]}" 'reset-prompt ">"'
+        assert equal "${ZLE_CALL[4]}" '-R ">"'
+        assert equal "${ZLE_CALL[5]}" 'get-line ">"'
+        reset_stub_zle
+    end
 end
 
 describe "Compact Accept line"
