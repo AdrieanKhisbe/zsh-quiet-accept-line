@@ -46,11 +46,10 @@ function quiet-accept-line () {
         PROMPT="" zle reset-prompt; zle -R
 
         # Display log from generated content
-        echo $(tput dim)
-        cat $tmpfile \
+        {echo $(tput dim) ; cat $tmpfile ; } \
          | sed "s:^__ERR__>>\(.*\)\$:$(tput setaf 1)\1$(tput setaf 0):" \
          | sed "s:^:  :" \
-         | $ZLE_QAL_COMMAND # apply optional effect with command
+         | ${ZLE_QAL_COMMAND:-cat} # apply optional effect with command
     fi
     # TODO: see for prefix of logs
     # todo: see if tail last line, specially if previous command was hidden too
@@ -78,8 +77,11 @@ function pager-accept-line () {
 
     # Backup and reset current buffer
     local _BUFFER="$BUFFER"; BUFFER=""
+
     ZLE_QAL_LAST="$_BUFFER"
-    eval $_BUFFER 2> >(sed "s:^\(.*\)\$:$(tput setaf 1)\1$(tput setaf 0):") | $ZLE_QAL_PAGER
+    eval $_BUFFER \
+      2> >(sed "s:^\(.*\)\$:$(tput setaf 1)\1$(tput setaf 0):") \
+      | $ZLE_QAL_PAGER
     ZLE_QAL_STATUS=$?
 
     # remove prompt and reset original prompt
@@ -101,7 +103,7 @@ bindkey "${ZLE_QAL_PAGER_KEY:-\C-N}" compact-accept-line
 function silent-accept-line () {
     if [ -z "$BUFFER" ]; then return; fi
     ZLE_QAL_LAST="$BUFFER"
-    eval $BUFFER 2> >(sed "s:^:__ERR__>>:") >&1 >> $ZLE_QAL_SILENT_DUMP_FILE
+    eval $BUFFER 2> >(sed "s:^:__ERR__>>:") >> $ZLE_QAL_SILENT_DUMP_FILE
     ZLE_QAL_STATUS=$?
     BUFFER=""
     # ❓ see if pop up there too
