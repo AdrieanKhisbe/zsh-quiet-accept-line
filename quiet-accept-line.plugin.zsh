@@ -19,27 +19,34 @@ ZLE_QAL_STATUS_OK=${ZLE_QAL_STATUS_OK:-"%{$fg_bold[green]%}✔"}
 ZLE_QAL_STATUS_KO=${ZLE_QAL_STATUS_KO:-"%{$fg_bold[red]%}✖"}
 
 ZLE_QAL_SILENT_DUMP_FILE=${ZLE_QAL_SILENT_DUMP_FILE:-/tmp/zsh-quiet-accept-line-silent-$$.log}
+ZLE_QAL_COMMAND=${ZLE_QAL_COMMAND:-cat}
 
 # Zle Widget to execute command without adding it to history
 # and triggering a new prompt
 function quiet-accept-line () {
+    # do nothing if nothing to do 🧠
+    if [ -z "$BUFFER" ]; then
+        return
+    fi
+
     # Backup and reset current buffer
     local _BUFFER="$BUFFER"; BUFFER=""
     ZLE_QAL_LAST="$_BUFFER"
-    # Erase current prompt, replace by an invisible one
-    # with same number of line
-    PROMPT="$(repeat $(($(echo \"$PROMPT\"|wc -l) -1)) echo)"\
-          zle reset-prompt; zle -R
-    # TODO: only redraw if something was printed!
+    local tmpfile=$(mktemp)
+    eval $_BUFFER 2> >(sed "s:^:__ERR__>>:") | tee $tmpfile > /dev/null # hack to capture both
+    # 💭 Maybe effect on cursor
 
     # ! FIXME: add a separating line ???
     echo -n $reset_color
     # run command, capture and process log
-    tmpfile=$(mktemp)
-    eval $_BUFFER 2> >(sed "s:^:__ERR__>>:") | tee $tmpfile > /dev/null # hack to capture both
     if [ -s $tmpfile ] ; then
+         # Erase current prompt, replace by an invisible one with same number of line
+        PROMPT="$(repeat $(($(echo \"$PROMPT\"|wc -l) -1)) echo)"\
+          zle reset-prompt; zle -R
+
+        # Display log from generated content
         echo $(tput dim)
-        cat $tmpfile | sed "s:^__ERR__>>\(.*\)\$:$(tput setaf 1)\1$(tput setaf 0):" | sed "s:^:  :" | less
+        cat $tmpfile | sed "s:^__ERR__>>\(.*\)\$:$(tput setaf 1)\1$(tput setaf 0):" | sed "s:^:  :" | $ZLE_QAL_COMMAND
         # TODO: apply optional effect. (could be pager!) 💭💡
     fi
     # TODO: see for prefix of logs
@@ -58,20 +65,27 @@ function quiet-accept-line () {
 
     # reset original prompt
     zle reset-prompt
+    zle get-line # can pop up ESC-Q command if any  # ❓ see if optional behavior
 }
 zle -N quiet-accept-line
 bindkey "${ZLE_QAL_QUIET_KEY:-^X^M}" quiet-accept-line # ⌨️ this is "alt enter"
 
 function silent-accept-line () {
+    if [ -z "$BUFFER" ]; then return; fi
     ZLE_QAL_LAST="$BUFFER"
     eval $BUFFER 2> >(sed "s:^:__ERR__>>:") >&1 >> $ZLE_QAL_SILENT_DUMP_FILE
     ZLE_QAL_STATUS=$?
     BUFFER=""
+    # ❓ see if pop up there too
 }
 zle -N silent-accept-line
 bindkey "${ZLE_QAL_SILENT_KEY:-^X^J}" silent-accept-line
 
-# 💭💡 add variant for pager! page-accept-line (less/lets)
+# 💭 Next ideas 💡
+# +❗ add variants
+#   - for pager! page-accept-line (less/lets)
+#   -  to compact the prompt $ $BUFFER, result
+# + Add qal cli to control var
 
 function last-quiet-accept-line () {
     BUFFER="$ZLE_QAL_LAST"
