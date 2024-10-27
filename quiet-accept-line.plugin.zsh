@@ -20,6 +20,8 @@ ZLE_QAL_STATUS_KO=${ZLE_QAL_STATUS_KO:-"%{$fg_bold[red]%}✖"}
 
 ZLE_QAL_SILENT_DUMP_FILE=${ZLE_QAL_SILENT_DUMP_FILE:-/tmp/zsh-quiet-accept-line-silent-$$.log}
 ZLE_QAL_COMMAND=${ZLE_QAL_COMMAND:-cat}
+ZLE_QAL_PAGER=${ZLE_QAL_PAGER:-$PAGER}
+ZLE_QAL_COMPACT_PROMPT=${ZLE_QAL_COMPACT_PROMPT:-'%B$%b '}
 
 # Zle Widget to execute command without adding it to history
 # and triggering a new prompt
@@ -41,13 +43,14 @@ function quiet-accept-line () {
     # run command, capture and process log
     if [ -s $tmpfile ] ; then
          # Erase current prompt, replace by an invisible one with same number of line
-        PROMPT="$(repeat $(($(echo \"$PROMPT\"|wc -l) -1)) echo)"\
-          zle reset-prompt; zle -R
+        PROMPT="" zle reset-prompt; zle -R
 
         # Display log from generated content
         echo $(tput dim)
-        cat $tmpfile | sed "s:^__ERR__>>\(.*\)\$:$(tput setaf 1)\1$(tput setaf 0):" | sed "s:^:  :" | $ZLE_QAL_COMMAND
-        # TODO: apply optional effect. (could be pager!) 💭💡
+        cat $tmpfile \
+         | sed "s:^__ERR__>>\(.*\)\$:$(tput setaf 1)\1$(tput setaf 0):" \
+         | sed "s:^:  :" \
+         | $ZLE_QAL_COMMAND # apply optional effect with command
     fi
     # TODO: see for prefix of logs
     # todo: see if tail last line, specially if previous command was hidden too
@@ -69,6 +72,31 @@ function quiet-accept-line () {
 }
 zle -N quiet-accept-line
 bindkey "${ZLE_QAL_QUIET_KEY:-^X^M}" quiet-accept-line # ⌨️ this is "alt enter"
+
+function pager-accept-line () {
+    if [ -z "$BUFFER" ]; then return; fi
+
+    # Backup and reset current buffer
+    local _BUFFER="$BUFFER"; BUFFER=""
+    ZLE_QAL_LAST="$_BUFFER"
+    eval $_BUFFER 2> >(sed "s:^\(.*\)\$:$(tput setaf 1)\1$(tput setaf 0):") | $ZLE_QAL_PAGER
+    ZLE_QAL_STATUS=$?
+
+    # remove prompt and reset original prompt
+    PROMPT="" zle reset-prompt; zle -R
+    zle reset-prompt; zle -R
+    zle get-line # can pop up ESC-Q command if any  # ❓ see if optional behavior
+}
+zle -N pager-accept-line
+bindkey "${ZLE_QAL_PAGER_KEY:-^X^\C-M}" pager-accept-line
+
+function compact-accept-line () {
+    if [ -z "$BUFFER" ]; then return; fi
+    PROMPT="$ZLE_QAL_COMPACT_PROMPT" zle reset-prompt; zle -R
+    zle accept-line;
+}
+zle -N compact-accept-line
+bindkey "${ZLE_QAL_PAGER_KEY:-\C-N}" compact-accept-line
 
 function silent-accept-line () {
     if [ -z "$BUFFER" ]; then return; fi
