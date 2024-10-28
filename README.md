@@ -6,15 +6,18 @@ Zsh Quiet-Accept-Line
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 
-> **Zsh plugin** is to enable to run typed zsh command without triggering a new prompt and saving the query to the history
+> This **Zsh plugin** enables you to run typed zsh command without triggering new prompt, history entry, or having output being outputed.
 
-[![asciicast](https://asciinema.org/a/143440.png)](https://asciinema.org/a/143440) _(outputed now :scroll:)_
+Here is a (_now a outdated_ :scroll:)_) preview :clapper::
+
+[![asciicast](https://asciinema.org/a/143440.png)](https://asciinema.org/a/143440)
 
 ## Usage
-This plugins define several `zle` widgets:
+This plugins define several `zle` widgets to run commands from the shell as variant of classic `accept-line`:
 
 - `quiet-accept-line`: run the current typed command, without output a new prompt (it removes and rewrite command)
   - bound to <kbd>C-x RET</kbd>/<kbd>C-x C-m</kbd>, **<kbd>ESC ENTER</kbd>**, (this is <kbd>Alt enter</kbd> on macos). Configurable with `ZLE_QAL_QUIET_KEY`
+  - output can be piped to a custom program/function with `ZLE_QAL_COMMAND`
 - `pager-accept-line`: run the current typed command outputing output in pager, preserve(restore) existing prompt
   - bound to both <kbd>C-x C-RET</kbd>/<kbd>C-x C-m</kbd>, <kbd>ESC CTRL-ENTER</kbd> **AND** <kbd>A-C-m</kbd>, <kbd> CTRL-ALT-ENTER</kbd> (overridable with `ZLE_QAL_PAGER_KEY` and `ZLE_QAL_PAGER_KEY2`)
   - pager configurable with `ZLE_QAL_PAGER`, default to less
@@ -43,9 +46,9 @@ Just source [quiet-accept-line](./quiet-accept-line.zsh) content, or if you use 
 - same for [antidote](https://github.com/mattmc3/antidote) and [antibody](https://github.com/getantibody/antibody)
 - for [zplug](https://github.com/zplug/zplug), add `zplug "adrieankhisbe/zsh-quiet-accept-line"`
 
-## Configuration [TO BE UPDATED]
+## Configuration
 
-Keys can be configured based on the following variables: `ZLE_QAL_QUIET_KEY`, `ZLE_QAL_SILENT_KEY`, and `ZLE_QAL_LAST_KEY`. (default being `^X^M`, `^X^J` and `^X^K`)
+Keys can be configured based on the following variables and relatable defaults: `ZLE_QAL_QUIET_KEY` (`^X^M`), `ZLE_QAL_SILENT_KEY` (`^X^J`), `ZLE_QAL_COMPACT_KEY`, `ZLE_QAL_PAGER_KEY`/`ZLE_QAL_PAGER_KEY2` (`^X^\C-M`/`\e^\C-M`) and `ZLE_QAL_LAST_KEY`(`^X^K`).
 
 Output of the status code can be customized with the following variable:
 
@@ -53,6 +56,14 @@ Output of the status code can be customized with the following variable:
 - `ZLE_QAL_STATUS_OK`: what is output for successful command (default green `✔` with prompt color escape `%{%}`)
 - `ZLE_QAL_STATUS_KO`: what is output for failing command (default red `✖` with prompt color escape `%{%}`)
   note that status is saved to `ZLE_QAL_STATUS` variable
+
+As mention in usage, some behavior can be configured, notably:
+
+- `ZLE_QAL_COMMAND`: command to pipe command logs for `quiet-accept-line`
+- `ZLE_QAL_PAGER`: pager for `pager-accept-line`, default to `$PAGER`
+- `ZLE_QAL_SILENT_DUMP_FILE` default to (`/tmp/zsh-quiet-accept-line-silent-$$.log`), disable with `/dev/null`
+- `ZLE_QAL_COMPACT_PROMPT`: compact prompt for `compact-accept-line` default `%B$%b `
+
 
 ## About
 
