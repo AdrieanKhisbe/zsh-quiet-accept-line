@@ -10,8 +10,8 @@
 # Author: Adrien Becchis (@AdrieanKhisbe on github&twitter)
 # Homepage: http://github.com/AdrieanKhisbe/zsh-quiet-accept-line
 # License: MIT License<adriean.khisbe@live.fr>
-# Version: v0.2.0
-# Released on: 2024-10-28
+# Version: v0.3.0
+# Released on: 2025-10-29
 
 
 ZLE_QAL_STATUS_DURATION=${ZLE_QAL_STATUS_DURATION:-0.5}

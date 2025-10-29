@@ -8,6 +8,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][unreleased]
 *Nothing So Far*
 
+## [0.3.0] - 2025-10-29
+- Introduce a new command `history-ignore-accept-line`
+
+- Refresh CI configuration
+
 ## [0.2.0] - 2024-10-28
 Release from [#3]
 - Introduce two new commands: `pager-accept-line` and `compact-accept-line`
@@ -16,6 +21,7 @@ Release from [#3]
 
 [#3]: https://github.com/AdrieanKhisbe/zsh-quiet-accept-line/pull/3
 
-[unreleased]: https://github.com/AdrieanKhisbe/zsh-quiet-accept-line/compare/v1.0.0...HEAD
-[0.2.0]: https://github.com/AdrieanKhisbe/zsh-quiet-accept-line/compare/v0.1.1...v1.0.0
+[unreleased]: https://github.com/AdrieanKhisbe/zsh-quiet-accept-line/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/AdrieanKhisbe/zsh-quiet-accept-line/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/AdrieanKhisbe/zsh-quiet-accept-line/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/AdrieanKhisbe/zsh-quiet-accept-line/compare/v0.1.0...v0.1.1
