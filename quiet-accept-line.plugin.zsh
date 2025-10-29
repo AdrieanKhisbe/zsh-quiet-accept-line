@@ -28,7 +28,7 @@ ZLE_QAL_COMPACT_PROMPT=${ZLE_QAL_COMPACT_PROMPT:-'%B$%b '}
 function quiet-accept-line () {
     if [[ "$1" == "-h" || "$1" == "--help" ]]; then
         echo "$(tput bold)quiet-accept-line$(tput sgr0)"
-        echo "Run the current typed command, without output a new prompt (it removes and rewrite buffer)"
+        echo "Run the current typed command, without outputting a new prompt (it removes and rewrite buffer)"
         echo "\nThis is bound to $(tput bold)$(tput dim)${ZLE_QAL_QUIET_KEY:-^X^M}$(tput sgr0)"
         echo "$(tput dim)ZLE_QAL_STATUS_OK$(tput sgr0) control the success status prompt (currently: ${ZLE_QAL_STATUS_OK})"
         echo "and $(tput dim)ZLE_QAL_STATUS_KO$(tput sgr0) the failure status one (currently: ${ZLE_QAL_STATUS_KO})"
@@ -86,7 +86,7 @@ bindkey "${ZLE_QAL_QUIET_KEY:-^X^M}" quiet-accept-line # ⌨️ this is "alt ent
 function pager-accept-line () {
     if [[ "$1" == "-h" || "$1" == "--help" ]]; then
         echo "$(tput bold)pager-accept-line$(tput sgr0)"
-        echo "Run the current typed command outputing output in pager, preserve(restore) existing prompt"
+        echo "Run the current typed command forwarding output in pager, preserve(restore) existing prompt"
         echo "\nThis is bound to $(tput bold)$(tput dim)${ZLE_QAL_PAGER_KEY:-^X^\C-M}$(tput sgr0) and $(tput bold)$(tput dim)${ZLE_QAL_PAGER_KEY2:-\\\e^\C-M}$(tput sgr0)"
         echo "$(tput dim)ZLE_QAL_PAGER$(tput sgr0) control the pager to be used (currently: ${ZLE_QAL_PAGER:-$PAGER})"
         return 0
@@ -131,7 +131,7 @@ bindkey "${ZLE_QAL_COMPACT_KEY:-^N}" compact-accept-line
 function silent-accept-line () {
     if [[ "$1" == "-h" || "$1" == "--help" ]]; then
         echo "$(tput bold)silent-accept-line$(tput sgr0)"
-        echo "Run the current typed command, without output a new prompt. Output will be suppressed"
+        echo "Run the current typed command, without outputting a new prompt. Output will be suppressed"
         echo "\nThis is bound to $(tput bold)$(tput dim)${ZLE_QAL_SILENT_KEY:-^X^\C-N}$(tput sgr0)"
         echo "$(tput dim)ZLE_QAL_SILENT_DUMP_FILE$(tput sgr0) control the file where output is dumped (currently: ${ZLE_QAL_SILENT_DUMP_FILE})"
         return 0

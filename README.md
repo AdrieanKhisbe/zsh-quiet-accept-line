@@ -15,10 +15,10 @@ Here is a (_now a outdated_ :scroll:) preview :clapper::
 ## Usage
 This plugins define several `zle` widgets to run commands from the shell as variant of classic `accept-line`:
 
-- `quiet-accept-line`: run the current typed command, without output a new prompt (it removes and rewrite buffer)
+- `quiet-accept-line`: Run the current typed command, without outputting a new prompt (it removes and rewrite buffer)
   - bound to <kbd>C-x RET</kbd>/<kbd>C-x C-m</kbd>, **<kbd>ESC ENTER</kbd>**, (this is <kbd>Alt enter</kbd> on macos). Configurable with `ZLE_QAL_QUIET_KEY`
   - output can be piped to a custom program/function with `ZLE_QAL_COMMAND`
-- `pager-accept-line`: run the current typed command outputing output in pager, preserve(restore) existing prompt
+- `pager-accept-line`: Run the current typed command forwarding output in pager, preserve(restore) existing prompt
   - bound to both <kbd>C-x C-RET</kbd>/<kbd>C-x C-m</kbd>, <kbd>ESC CTRL-ENTER</kbd> **AND** <kbd>A-C-m</kbd>, <kbd> CTRL-ALT-ENTER</kbd> (overridable with `ZLE_QAL_PAGER_KEY` and `ZLE_QAL_PAGER_KEY2`)
   - pager configurable with `ZLE_QAL_PAGER`, default to less
 
@@ -26,7 +26,7 @@ This plugins define several `zle` widgets to run commands from the shell as vari
   - bound to <kbd>\C-N</kbd>/<kbd>C-n</kbd>,(overridable with `ZLE_QAL_COMPACT_KEY`)
   - compact prompt default to `$` bold, configurable with `ZLE_QAL_COMPACT_PROMPT`
 
-- `silent-accept-line`: run the current typed command, without output a new prompt. output wil be suppressed
+- `silent-accept-line`: Run the current typed command, without outputting a new prompt. Output will be suppressed
   -  bound to <kbd>^X^\C-N</kbd> aka <kbd>ESC C-N</kbd>  (overridable with `ZLE_QAL_SILENT_KEY`)
   - content is dump in a temporary file (`/tmp/zsh-quiet-accept-line-silent-$$.log` pattern). It can be configured with `ZLE_QAL_SILENT_DUMP_FILE` or disabled setting this env var to `/dev/null`
 - `last-quiet-accept-line` bound to <kbd>C-x C-k</kbd>: restore to the prompt the last command that was run with `quiet/silent-accept-line``
