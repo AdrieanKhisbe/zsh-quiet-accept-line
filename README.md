@@ -32,7 +32,7 @@ This plugins define several `zle` widgets to run commands from the shell as vari
 - `last-quiet-accept-line` bound to <kbd>C-x C-k</kbd>: restore to the prompt the last command that was run with `quiet/silent-accept-line``
 
 - `history-ignore-accept-line`: run the current typed command prefixing it with a space so it's not stored in history
-  - bound to <kbd>C-x C-h</kbd> (overridable with `ZLE_QAL_HISTORY_IGNORE_KEY`)
+  - bound to <kbd>C-x C-SPC</kbd> (overridable with `ZLE_QAL_HISTORY_IGNORE_KEY`)
 
 
 Optionaly status code of the quietly runned command can be display.
@@ -52,7 +52,15 @@ Just source [quiet-accept-line](./quiet-accept-line.zsh) content, or if you use 
 
 ## Configuration
 
-Keys can be configured based on the following variables and relatable defaults: `ZLE_QAL_QUIET_KEY` (`^X^M`), `ZLE_QAL_SILENT_KEY` (`^X^J`), `ZLE_QAL_COMPACT_KEY`, `ZLE_QAL_PAGER_KEY`/`ZLE_QAL_PAGER_KEY2` (`^X^\C-M`/`\e^\C-M`), `ZLE_QAL_LAST_KEY`(`^X^K`) and `ZLE_QAL_HISTORY_IGNORE_KEY` (`^X^ `)
+Keys can be configured based on the following variables and relatable defaults:
+- `ZLE_QAL_QUIET_KEY` (default `^X^M`, <kbd>Ctrl-X</kbd> <kbd>Ctrl-M</kbd>)
+- `ZLE_QAL_SILENT_KEY` (default `^X^J`, <kbd>Ctrl-X</kbd> <kbd>Ctrl-J</kbd>)
+- `ZLE_QAL_COMPACT_KEY` (default `^N`, <kbd>Ctrl-N</kbd>)
+- `ZLE_QAL_PAGER_KEY` (default `^X^\C-M`, <kbd>Ctrl-X</kbd> <kbd>ESC</kbd> <kbd>Ctrl-M</kbd>)
+- `ZLE_QAL_PAGER_KEY2` (default `\e^\C-M`, <kbd>ESC</kbd> <kbd>Ctrl-M</kbd>)
+- `ZLE_QAL_LAST_KEY` (default `^X^K`, <kbd>Ctrl-X</kbd> <kbd>Ctrl-K</kbd>)
+- `ZLE_QAL_HISTORY_IGNORE_KEY` (default `^X^ `, <kbd>Ctrl-X</kbd> <kbd>Ctrl-Space</kbd>)
+
 
 Output of the status code can be customized with the following variable:
 

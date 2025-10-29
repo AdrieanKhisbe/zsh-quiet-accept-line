@@ -99,7 +99,7 @@ function compact-accept-line () {
     zle accept-line;
 }
 zle -N compact-accept-line
-bindkey "${ZLE_QAL_COMPACT_KEY:-\C-N}" compact-accept-line
+bindkey "${ZLE_QAL_COMPACT_KEY:-^N}" compact-accept-line
 
 function silent-accept-line () {
     if [ -z "$BUFFER" ]; then return; fi
