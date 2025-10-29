@@ -122,6 +122,7 @@ bindkey "${ZLE_QAL_SILENT_KEY:-^X^\C-N}" silent-accept-line
 # +❗ add variants
 #   - for pager! page-accept-line (less/lets)
 #   -  to compact the prompt $ $BUFFER, result
+#   - maybe do not erase BUFFER if already populated
 # + Add qal cli to control var
 
 function last-quiet-accept-line () {
@@ -133,6 +134,7 @@ bindkey "${ZLE_QAL_LAST_KEY:-^X^K}" last-quiet-accept-line
 # TODO: turn into a ring!
 
 function history-ignore-accept-line () {
+    if [ -z "${BUFFER## }" ]; then return; fi
     # Tweak buffer so it gets ignored by history according HIST_IGNORE_SPACE option
     BUFFER=" ${BUFFER## }"
     zle accept-line
