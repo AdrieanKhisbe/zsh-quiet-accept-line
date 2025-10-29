@@ -2,20 +2,20 @@ Zsh Quiet-Accept-Line
 =====================
 
 [![Tag Version](https://img.shields.io/github/tag/AdrieanKhisbe/zsh-quiet-accept-line.svg)](https://github.com/AdrieanKhisbe/zsh-quiet-accept-line/tags)
-[![Build Status](https://img.shields.io/github/checks-status/AdrieanKhisbe/zsh-quiet-accept-line/master)](https://github.com/AdrieanKhisbe/dirzsh-quiet-accept-lineactions/actions)
+[![Build Status](https://img.shields.io/github/checks-status/AdrieanKhisbe/zsh-quiet-accept-line/master)](https://github.com/AdrieanKhisbe/zsh-quiet-accept-line/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 
 > This **Zsh plugin** enables you to run typed zsh command without triggering new prompt, history entry, or having output being outputed.
 
-Here is a (_now a outdated_ :scroll:)_) preview :clapper::
+Here is a (_now a outdated_ :scroll:) preview :clapper::
 
 [![asciicast](https://asciinema.org/a/143440.png)](https://asciinema.org/a/143440)
 
 ## Usage
 This plugins define several `zle` widgets to run commands from the shell as variant of classic `accept-line`:
 
-- `quiet-accept-line`: run the current typed command, without output a new prompt (it removes and rewrite command)
+- `quiet-accept-line`: run the current typed command, without output a new prompt (it removes and rewrite buffer)
   - bound to <kbd>C-x RET</kbd>/<kbd>C-x C-m</kbd>, **<kbd>ESC ENTER</kbd>**, (this is <kbd>Alt enter</kbd> on macos). Configurable with `ZLE_QAL_QUIET_KEY`
   - output can be piped to a custom program/function with `ZLE_QAL_COMMAND`
 - `pager-accept-line`: run the current typed command outputing output in pager, preserve(restore) existing prompt
