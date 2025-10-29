@@ -131,3 +131,11 @@ function last-quiet-accept-line () {
 zle -N last-quiet-accept-line
 bindkey "${ZLE_QAL_LAST_KEY:-^X^K}" last-quiet-accept-line
 # TODO: turn into a ring!
+
+function history-ignore-accept-line () {
+    # Tweak buffer so it gets ignored by history according HIST_IGNORE_SPACE option
+    BUFFER=" ${BUFFER## }"
+    zle accept-line
+}
+zle -N history-ignore-accept-line
+bindkey "${ZLE_QAL_HISTORY_IGNORE_KEY:-^X^ }" history-ignore-accept-line # Ctrl+X Ctrl+Space
