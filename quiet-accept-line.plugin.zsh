@@ -26,6 +26,17 @@ ZLE_QAL_COMPACT_PROMPT=${ZLE_QAL_COMPACT_PROMPT:-'%B$%b '}
 # Zle Widget to execute command without adding it to history
 # and triggering a new prompt
 function quiet-accept-line () {
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        echo "quiet-accept-line"
+        echo "Run the current typed command, without output a new prompt (it removes and rewrite buffer)"
+        echo "\nThis is bound to ${ZLE_QAL_QUIET_KEY:-^X^M}"
+        echo "ZLE_QAL_STATUS_OK control the success status prompt (currently: ${ZLE_QAL_STATUS_OK})"
+        echo "and ZLE_QAL_STATUS_KO the failure status one (currently: ${ZLE_QAL_STATUS_KO})"
+        echo "Duration of status display can be controlled by ZLE_QAL_STATUS_DURATION (currently: ${ZLE_QAL_STATUS_DURATION})"
+
+        return 0
+    fi
+
     # do nothing if nothing to do 🧠
     if [ -z "$BUFFER" ]; then
         return
@@ -73,6 +84,14 @@ zle -N quiet-accept-line
 bindkey "${ZLE_QAL_QUIET_KEY:-^X^M}" quiet-accept-line # ⌨️ this is "alt enter"
 
 function pager-accept-line () {
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        echo "pager-accept-line"
+        echo "Run the current typed command outputing output in pager, preserve(restore) existing prompt"
+        echo "\nThis is bound to ${ZLE_QAL_PAGER_KEY:-^X^\C-M} and ${ZLE_QAL_PAGER_KEY2:-\\\e^\C-M}"
+        echo "ZLE_QAL_PAGER control the pager to be used (currently: ${ZLE_QAL_PAGER:-$PAGER})"
+        return 0
+    fi
+
     if [ -z "$BUFFER" ]; then return; fi
 
     # Backup and reset current buffer
@@ -94,6 +113,14 @@ bindkey "${ZLE_QAL_PAGER_KEY:-^X^\C-M}" pager-accept-line
 bindkey "${ZLE_QAL_PAGER_KEY2:-\e^\C-M}" pager-accept-line
 
 function compact-accept-line () {
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        echo "compact-accept-line"
+        echo "Run the current typed command persisting a more compact prompt"
+        echo "\nThis is bound to ${ZLE_QAL_COMPACT_KEY:-^N}"
+        echo "ZLE_QAL_COMPACT_PROMPT control the compact prompt (currently: ${ZLE_QAL_COMPACT_PROMPT})"
+        return 0
+    fi
+
     if [ -z "$BUFFER" ]; then return; fi
     PROMPT="$ZLE_QAL_COMPACT_PROMPT" zle reset-prompt; zle -R
     zle accept-line;
@@ -102,6 +129,14 @@ zle -N compact-accept-line
 bindkey "${ZLE_QAL_COMPACT_KEY:-^N}" compact-accept-line
 
 function silent-accept-line () {
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        echo "silent-accept-line"
+        echo "Run the current typed command, without output a new prompt. Output will be suppressed"
+        echo "\nThis is bound to ${(q)ZLE_QAL_SILENT_KEY:-^X^\C-N}"
+        echo "ZLE_QAL_SILENT_DUMP_FILE control the file where output is dumped (currently: ${ZLE_QAL_SILENT_DUMP_FILE})"
+        return 0
+    fi
+
     if [ -z "$BUFFER" ]; then return; fi
     # Backup and reset current buffer
     local _BUFFER="$BUFFER"; BUFFER=""
@@ -126,6 +161,13 @@ bindkey "${ZLE_QAL_SILENT_KEY:-^X^\C-N}" silent-accept-line
 # + Add qal cli to control var
 
 function last-quiet-accept-line () {
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        echo "last-quiet-accept-line"
+        echo "Restore to the prompt the last command that was run with quiet/silent-accept-line"
+        echo "\nThis is bound to ${(q)ZLE_QAL_LAST_KEY:-^X^K}"
+        return 0
+    fi
+
     BUFFER="$ZLE_QAL_LAST"
     zle end-of-line
 }
@@ -134,6 +176,13 @@ bindkey "${ZLE_QAL_LAST_KEY:-^X^K}" last-quiet-accept-line
 # TODO: turn into a ring!
 
 function history-ignore-accept-line () {
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        echo "history-ignore-accept-line"
+        echo "Run the current typed command prefixing it with a space so it's not stored in history"
+        echo "\nThis is bound to ${(q)ZLE_QAL_HISTORY_IGNORE_KEY:-^X^ }"
+        return 0
+    fi
+
     if [ -z "${BUFFER## }" ]; then return; fi
     # Tweak buffer so it gets ignored by history according HIST_IGNORE_SPACE option
     BUFFER=" ${BUFFER## }"
